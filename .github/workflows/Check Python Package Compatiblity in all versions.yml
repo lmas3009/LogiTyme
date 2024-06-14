@@ -6,6 +6,8 @@ name: Check Python Package Compatiblity in all versions
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'requirements.txt'
   pull_request:
     branches: [ "main" ]
 
