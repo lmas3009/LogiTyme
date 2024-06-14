@@ -26,6 +26,90 @@ After installation, you can verify it by importing LogiTyme in a python script
     ```
 
 
+# Usage
+
+Simple example on how to use:
+```bash
+import LogiTyme
+logityme = LogiTyme.LogiTyme(end="local")
+
+logityme.StartReport()
+
+def slow_function(n):
+  result = 0
+  for i in range(n):
+    for j in range(n):
+      result += i*j
+      print(result)
+
+  return result
+slow_function(500)
+
+logityme.LogiFuncStart(name="for-loop")
+re = 0
+for i in range(500):
+  for j in range(500):
+    re += i * j
+    print(re)
+logityme.LogiFuncEnd()
+
+logityme.GenerateReport()
+```
+
+Resulted Output:
+```text
+Performance Analysis
+
+1. Introduction:
+	This report presents the findings of performance analysis conducted on the python program 'test_main.py'. This purpose of the analysis is to give insights of time consumed by the program and provide recommendations for optimizing the programs's performance
+
+2. Methodolgy:
+	The program was profiled using cprofile mmodile to collect data on exection time. The collected data was analyzed to identify functions consuming the most time.
+
+3. Results:
+	- Started the program at: 2024-06-14 14:25:01.708068
+	- Ended the program at: 2024-06-14 14:25:07.886945
+	- Total Execution Time: 6.179 seconds
+	- memory consumed: 0.0203MB
+
+4. Functions Results:
++---------------+---------------+
+| Function Name | Time Consumed |
++---------------+---------------+
+| slow_function | 3.024 secs    |
+| for-loop      | 2.65 secs     |
++---------------+---------------+
+
+5. inBuilt-functions Time-Consumed Report:
++----------------------------------+---------------+
+| Function Name                    | Time Consumed |
++----------------------------------+---------------+
+| <built-in method builtins.print> | 5.253 secs    |
+| <built-in method nt.stat>        | 0.001 secs    |
++----------------------------------+---------------+
+
+6. Environment Suggestions:
+	- Short tasks (less than 5 minutes):
+		-- GCP (Cloud Functions, Compute Engine, GKE, Cloud Run) or AWS (Lambda, EC2, ECS, Step Function, Glue): 
+			 Both are well-suited for tasks that complete quickly.
+		-- Azure Functions (Consumption Plan, VM, AKS, Container Instances):
+			 Good choice for short tasks
+
+7. Code Optimization:
++---------------+---------------+
+| Function Name | Time Consumed |
++---------------+---------------+
+| slow_function | 3.024 secs    |
+| for-loop      | 2.65 secs     |
++---------------+---------------+
+The above function "slow_function" is in the 1 position for having highest amount of time in the entire program. Since the function took 3.024 secs is less then 300 seconds (i.e < 5 mins). The function is quite optimized 
+The above function "for-loop" is in the 2 position for having highest amount of time in the entire program. Since the function took 2.65 secs is less then 300 seconds (i.e < 5 mins). The function is quite optimized 
+
+8. Conclusion:
+	The analysis revealed areas for potential optimization in the Python program 'test_main.py'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency
+```
+
+
 # Release Version
 - **```0.0.1```**
   - Launching LogiTyme
