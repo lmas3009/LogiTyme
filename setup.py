@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '0.0.3'
+VERSION = '0.0.4'
 DESCRIPTION = 'LogiTyme is a Python package used to track the time spent on each function, custom functions, and the entire Python Program.'
 
 # Setting up
@@ -25,7 +25,7 @@ setup(
     install_requires=['terminaltables'],
     keywords=['logging', 'analyzing'],
     classifiers=[
-        "Development Status :: 1 - Planning",
+        "Development Status :: 5 - Production",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3",
         "Operating System :: Unix",

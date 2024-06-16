@@ -111,7 +111,7 @@ The above function "for-loop" is in the 2 position for having highest amount of 
 
 
 # _Release Version_
-- **```0.0.2 / 0.0.3 ```**
+- **```0.0.2 / 0.0.3 / 0.0.4```**
   - Launching LogiTyme
     - Functions Included:
       - **StartReport:** _used to start the process of logging the time for you python program._
