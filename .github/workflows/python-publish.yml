@@ -9,8 +9,10 @@
 name: Upload Python Package to PyPi
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'setup.py'
 
 permissions:
   contents: read
