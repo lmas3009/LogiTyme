@@ -1,15 +1,14 @@
 <h1 align="center">LogiTyme</h1>
 <p align="center">A Python handler for <a href="https://github.com/lmas3009/LogiTyme"><i>logityme</i></a>.</p>
 
-[![python compatibility](https://github.com/lmas3009/LogiTyme/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions/badge.svg)](https://github.com/lmas3009/LogiTyme/actions/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions.yml)
+[//]: # ([![python compatibility]&#40;https://github.com/lmas3009/LogiTyme/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions/badge.svg&#41;]&#40;https://github.com/lmas3009/LogiTyme/actions/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions.yml&#41;)
 [![python version](https://img.shields.io/badge/Works_With_Python-3.9,%203.10,%203.11-orange)](https://github.com/lmas3009/LogiTyme/actions/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions.yml)
 
 ---
 
 LogiTyme is a Python package used to track the time spent on each function, custom functions, and the entire Python Program
 
-- Documentation Link: xxxxxxxx
-- Python package repo link: xxxxx
+- Python package repo link: https://pypi.org/project/LogiTyme/
 
 
 # *Installation Process*:
