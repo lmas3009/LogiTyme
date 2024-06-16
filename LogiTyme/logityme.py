@@ -100,7 +100,6 @@ class LogiTyme:
         report += f"6. Environment Suggestions:\n"
         report += f"{self.__env_suggestions(total_time)}\n\n"
         report += f"7. Code Optimization:\n"
-        # max_time_consumed = max(functions, key=functions.get)
         functions_table = [["Function Name", "Time Consumed"]]
         functions = dict(
             sorted(functions.items(), key=lambda item: item[1], reverse=True)[:3]
@@ -136,13 +135,8 @@ class LogiTyme:
         self.__endTime = datetime.now()
         current, peak = self.__tracemalloc.get_traced_memory()
         self.__profiler.disable()
-        # self.profiler.dump_stats("profile_results.prof")
-        # Stats(self.__profiler).strip_dirs().sort_stats(
-        #     SortKey.CALLS, SortKey.TIME
-        # ).print_stats()
         stats = Stats(self.__profiler)
         res = str(stats)
-        # stats.print_stats()
         ttt = 0
         funcs = {}
         time_comsumed_inbuilt = {}
@@ -175,8 +169,6 @@ class LogiTyme:
         # exit()
         for filename in self.__filenames:
             os.remove(self.__filePath + filename + ".prof" if self.__env == "local" else self.__filePath + filename + ".prof")
-            # os.remove("." + self.__filePath + filename + ".prof" if self.__env == "local" else self.__filePath + filename + ".prof")
-            # os.remove("." + self.filePath + filename + ".txt")
         self.__filenames = []
         funcs = dict(sorted(funcs.items(), reverse=True, key=lambda item: item[1]))
         time_comsumed_inbuilt = dict(
