@@ -25,7 +25,7 @@ After installation, you can verify it by importing LogiTyme in a python script
     ```
 
 
-# Usage
+# *Usage*
 
 Simple example on how to use:
 ```bash
@@ -56,7 +56,7 @@ logityme.LogiFuncEnd()
 logityme.GenerateReport()
 ```
 
-Resulted Output:
+**_Resulted Output:_**
 ```text
 Performance Analysis
 
@@ -110,14 +110,16 @@ The above function "for-loop" is in the 2 position for having highest amount of 
 ```
 
 
-# Release Version
-- **```0.0.1 / 0.0.2```**
+# _Release Version_
+- **```0.0.2 / 0.0.3 ```**
   - Launching LogiTyme
     - Functions Included:
       - **StartReport:** _used to start the process of logging the time for you python program._
       - **GenerateReport:**  _used to end the logging process and generate a report based on each function used in the code.
         Now this will start process the logged data and generate a report based on the time spent in each function used in your code.
         The generated report will provide insights into the performance if different functions_
+        - env  To run the code in local machine or in cloud machine
+        - env = "local" / "cloud" 
       - **LogiFuncStart & LogiFuncEnd:** _used to log time for custom code._
 
 
