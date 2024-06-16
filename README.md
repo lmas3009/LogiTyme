@@ -16,7 +16,7 @@ LogiTyme is a Python package used to track the time spent on each function, cust
 1. Install LogiTyme via pip:
 To install the LogiTyme package, use the following pip command
     ```bash
-    pip install logityme
+    pip install LogiTyme
     ```
 3. Verifify the Installation:
 After installation, you can verify it by importing LogiTyme in a python script
@@ -30,8 +30,9 @@ After installation, you can verify it by importing LogiTyme in a python script
 
 Simple example on how to use:
 ```bash
-import LogiTyme
-logityme = LogiTyme.LogiTyme(end="local")
+from LogiTyme import LogiTyme
+
+logityme = LogiTyme(env="local")
 
 logityme.StartReport()
 

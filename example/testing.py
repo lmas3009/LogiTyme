@@ -1,5 +1,4 @@
-from src.logityme.logityme import LogiTyme
-
+from LogiTyme import LogiTyme
 logityme = LogiTyme(env="local")
 
 logityme.StartReport()
