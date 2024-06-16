@@ -25,7 +25,6 @@ setup(
     install_requires=['terminaltables'],
     keywords=['logging', 'analyzing'],
     classifiers=[
-        "Development Status :: 5 - Production",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3",
         "Operating System :: Unix",
