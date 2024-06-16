@@ -123,6 +123,6 @@ The above function "for-loop" is in the 2 position for having highest amount of 
 
 # *Creator Information*:
 - Created By: Aravind Kumar Vemula
-- Twitter: xxxxxxx
-- Github: xxxxxxx
+- Twitter: https://x.com/AravindKumarV09
+- Github: https://github.com/lmas3009
 

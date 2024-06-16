@@ -2,12 +2,6 @@
 LogiTyme:
     LogiTyme is a Python package used to track the time spent on each function,
     custom functions, and the entire Python Program
-
-Creator Information:
-    created by [Aravind Kumar Vemula]
-    twitter: xxxxxxxxx
-    github: xxxxxxxxx
-    web-link: xxxxxxxxx
 """
 
 import cProfile
@@ -23,33 +17,35 @@ from terminaltables import AsciiTable
 
 class LogiTyme:
     def __init__(self, env):
-        self.env = env
-        self.profiler = cProfile.Profile()
-        self.tracemalloc = tracemalloc
-        self.current_file_name = sys.argv[0].split("\\")[-1]
-        self.filenames = []
-        self.customProfile = None
-        self.filePath = "/tmp/"
-        self.fileName = ""
+        self.__endTime = None
+        self.__startTime = None
+        self.__env = env
+        self.__profiler = cProfile.Profile()
+        self.__tracemalloc = tracemalloc
+        self.__current_file_name = sys.argv[0].split("/")[-1]
+        self.__filenames = []
+        self.__customProfile = None
+        self.__filePath = "tmp/"
+        self.__fileName = ""
 
     """
     createDir:
         This will create a directory with tmp only in local server.
     """
-    def createDir(self):
-        if self.env == "local":
-            if not os.path.exists("." + self.filePath):
-                os.makedirs("." + self.filePath)
+    def __createDir(self):
+        if self.__env == "local":
+            if not os.path.exists(self.__filePath):
+                os.makedirs( self.__filePath)
 
     """
     StartReport: 
         Is the feature used to start the process of logging the time for you python program.
     """
-    def startReport(self):
-        self.startTime = datetime.now()
-        self.profiler.enable()
-        self.tracemalloc.start()
-        self.createDir()
+    def StartReport(self):
+        self.__startTime = datetime.now()
+        self.__profiler.enable()
+        self.__tracemalloc.start()
+        self.__createDir()
     #
     # def exclude_function(self, action):
     #     if action == "exclude":
@@ -65,18 +61,11 @@ class LogiTyme:
         if time_taken <= 300:
             return f"\t- Short tasks (less than 5 minutes):\n\t\t-- GCP (Cloud Functions, Compute Engine, GKE, Cloud Run) or AWS (Lambda, EC2, ECS, Step Function, Glue): \n\t\t\t Both are well-suited for tasks that complete quickly.\n\t\t-- Azure Functions (Consumption Plan, VM, AKS, Container Instances):\n\t\t\t Good choice for short tasks"
         elif time_taken > 300 and time_taken < 900:
-            # aws ec2, ecs, eks, batch, gluex, step function
-            # gcp compute entire, app engine, gke, cloud run
-            return f"\t- Medium tasks (5 to 15 minutes):\n\t\t-- AWS Lambda: \n\t\t\t With a 15-minutes limit, AWS Lambda is ideal for tasks that require a bit more time.\n\t\t-- Azure Functions(Premium or Dedicated Plan, VM, AKS, Container Instance):\n\t\t\t These plans can handle longer execution time."
+            return f"\t- Medium tasks (5 to 15 minutes):\n\t\t-- AWS EC2, ECS, EKS, Batch, Glue, Step Function: \n\t\t\t With a 15-minutes limit, AWS Lambda is ideal for tasks that require a bit more time.\n\t\t-- GCP Compute Engine, App Engine, GKE, Cloud Run:\n\t\t\t These services can handle longer execution time.\n\t\t-- Azure Functions (Premium or Dedicated Plan, VM, AKS, Container Instance):\n\t\t\t These plans can handle longer execution time."
         elif time_taken >= 900 and time_taken < 3600:
-            # aws ec2, ecs, eks, glue, step function
-            # gcp compute engine, GKE, app engine (standard env)
-            return f"\t- Long tasks (15 to 60 minutes):\n\t\t-- Azure Functions (Premium or Dedicated Plan, AKS, Container Instance, VM): \n\t\t\t Offers the flexibility to run tasks up tp 60 minsutes\n\t\t-- Docker Container:\n\t\t\t If any taks duration exceeds the limit of any serverless functions, Docker Conatiner have no timeout, allowing for long-running, complex workloads"
+            return f"\t- Long tasks (15 to 60 minutes):\n\t\t-- AWS EC2, ECS, EKS, Glue, Step Function: \n\t\t\t Offers the flexibility to run tasks up to 60 minutes.\n\t\t-- GCP Compute Engine, GKE, App Engine (Standard Environment):\n\t\t\t These services are suitable for long tasks.\n\t\t-- Azure Functions (Premium or Dedicated Plan, AKS, Container Instance, VM): \n\t\t\t Offers the flexibility to run tasks up to 60 minutes.\n\t\t-- Docker Container:\n\t\t\t If any task duration exceeds the limit of any serverless functions, Docker Containers have no timeout, allowing for long-running, complex workloads."
         elif time_taken >= 3600:
-            # aws ec2, ecs, eks, glue, step function
-            # gcp compute engine, gke, app engine(flexible env)
-            # azure vm, aks, preimum or dedicated plan.
-            return f"\t- Very Long tasks (over 60 minutes):\n\t\t-- Docker Container:\n\t\t\t If any taks duration exceeds the limit of any serverless functions, Docker Conatiner have no timeout, allowing for long-running, complex workloads"
+            return f"\t- Very Long tasks (over 60 minutes):\n\t\t-- AWS EC2, ECS, EKS, Glue, Step Function:\n\t\t\t Suitable for very long tasks.\n\t\t-- GCP Compute Engine, GKE, App Engine (Flexible Environment):\n\t\t\t Suitable for very long tasks.\n\t\t-- Azure VM, AKS, Premium or Dedicated Plan:\n\t\t\t Suitable for very long tasks.\n\t\t-- Docker Container:\n\t\t\t If any task duration exceeds the limit of any serverless functions, Docker Containers have no timeout, allowing for long-running, complex workloads."
 
     """
     __reportTempalte:
@@ -85,15 +74,14 @@ class LogiTyme:
     def __reportTemplate(
         self, total_time, memory_consumed, functions, inbuilt_functions,saveFile
     ):
-        print("Report")
-        report = f"Performance Analysis\n\n"
+        report = f"\nPerformance Analysis\n\n"
         report += f"1. Introduction:\n"
-        report += f"""\tThis report presents the findings of performance analysis conducted on the python program '{self.current_file_name}'. This purpose of the analysis is to give insights of time consumed by the program and provide recommendations for optimizing the programs's performance\n\n"""
+        report += f"""\tThis report presents the findings of a performance analysis conducted on the Python program '{self.__current_file_name}'. The purpose of the analysis is to provide insights into the time consumed by the program and offer recommendations for optimizing its performance.\n\n"""
         report += f"2. Methodolgy:\n"
-        report += f"""\tThe program was profiled using cprofile mmodile to collect data on exection time. The collected data was analyzed to identify functions consuming the most time.\n\n"""
+        report += f"""\tThe program was profiled using the cProfile module to collect data on execution time. The collected data was analyzed to identify the functions consuming the most time.\n\n"""
 
         report += f"3. Results:\n"
-        report += f"""\t- Started the program at: {self.startTime}\n\t- Ended the program at: {self.endTime}\n\t- Total Execution Time: {total_time} seconds\n\t- memory consumed: {round(memory_consumed,4)}MB\n\n"""
+        report += f"""\t- Started the program at: {self.__startTime}\n\t- Ended the program at: {self.__endTime}\n\t- Total Execution Time: {total_time} seconds\n\t- memory consumed: {round(memory_consumed,4)}MB\n\n"""
         report += f"4. Functions Results:\n"
 
         functions_table = [["Function Name", "Time Consumed"]]
@@ -130,10 +118,10 @@ class LogiTyme:
         report += function_table.table + "\n"
         report += report_function_max_time + "\n"
         report += "8. Conclusion:\n"
-        report += f"\tThe analysis revealed areas for potential optimization in the Python program '{self.current_file_name}'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency"
+        report += f"\tThe analysis revealed areas for potential optimization in the Python program '{self.__current_file_name}'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency"
 
         if(saveFile):
-            with open("Generated Report for "+self.current_file_name+".txt","w") as f:
+            with open("Generated Report for "+self.__current_file_name+".txt","w") as f:
                 f.writelines(report)
         else:
             print(report)
@@ -144,32 +132,24 @@ class LogiTyme:
         Now this will start process the logged data and generate a report based on the time spent in each function used in your code.
         The generated report will provide insights into the performance if different functions
     """
-    def GenerateReport(self,save=False):
-        self.endTime = datetime.now()
-        print("start: ", self.startTime)
-        print("end: ", self.endTime)
-        print(self.endTime - self.startTime,"curr")
-        current, peak = self.tracemalloc.get_traced_memory()
-        print(current / 10**6, " MB consumed")
-        self.profiler.disable()
+    def GenerateReport(self,saveFile=False):
+        self.__endTime = datetime.now()
+        current, peak = self.__tracemalloc.get_traced_memory()
+        self.__profiler.disable()
         # self.profiler.dump_stats("profile_results.prof")
-        Stats(self.profiler).strip_dirs().sort_stats(
-            SortKey.CALLS, SortKey.TIME
-        ).print_stats()
-        print("eeee")
-        stats = Stats(self.profiler)
+        # Stats(self.__profiler).strip_dirs().sort_stats(
+        #     SortKey.CALLS, SortKey.TIME
+        # ).print_stats()
+        stats = Stats(self.__profiler)
         res = str(stats)
-        print(res,"resssssss")
-        print(str(stats.print_stats()),stats.print_stats(),"strrrrrrrrrrrrrrrrrrr")
         # stats.print_stats()
         ttt = 0
         funcs = {}
         time_comsumed_inbuilt = {}
         for func, (cc, nc, tt, ct, callers) in stats.stats.items():
             ttt += round(tt, 3)
-            if self.current_file_name in func[0]:
+            if self.__current_file_name in func[0]:
                 funcs[func[2]] = round(ct, 3)
-                print(ttt, "tttt")
 
             if "built-in" in func[2] and round(tt, 3) != 0.0:
                 if func[2] not in time_comsumed_inbuilt:
@@ -177,13 +157,10 @@ class LogiTyme:
                 else:
                     time_comsumed_inbuilt[func[2]] += round(tt, 33)
 
-        print(self.filenames,"fffff")
-        for filename in self.filenames:
-            stat1 = pstats.Stats("." + self.filePath + filename + ".prof" if self.env == "local" else self.filePath + filename + ".prof").sort_stats(
+        for filename in self.__filenames:
+            stat1 = pstats.Stats(self.__filePath + filename + ".prof" if self.__env == "local" else self.__filePath + filename + ".prof").sort_stats(
                 "tottime"
             )
-            stat1.print_stats()
-            print("qqq")
             stats_total_tile = 0
             for func, (cc, nc, tt, ct, callers) in stat1.stats.items():
                 stats_total_tile += round(tt, 3)
@@ -193,20 +170,14 @@ class LogiTyme:
                         time_comsumed_inbuilt[func[2]] = round(tt, 3)
                     else:
                         time_comsumed_inbuilt[func[2]] += round(tt, 33)
-            print(stats_total_tile, "stats_total_tile totla")
             funcs[filename] = stats_total_tile
 
-        print(funcs, "funcs")
-        print(ttt, "ttt")
-        print(time_comsumed_inbuilt, "time_consumed_by_inbuilt")
-        print("Total time taken: ", ttt)
-        print(self.filenames, "filenames")
         # exit()
-        for filename in self.filenames:
-            os.remove("." + self.filePath + filename + ".prof" if self.env == "local" else self.filePath + filename + ".prof")
+        for filename in self.__filenames:
+            os.remove(self.__filePath + filename + ".prof" if self.__env == "local" else self.__filePath + filename + ".prof")
+            # os.remove("." + self.__filePath + filename + ".prof" if self.__env == "local" else self.__filePath + filename + ".prof")
             # os.remove("." + self.filePath + filename + ".txt")
-        self.filenames = []
-        print(self.filenames, "filenames")
+        self.__filenames = []
         funcs = dict(sorted(funcs.items(), reverse=True, key=lambda item: item[1]))
         time_comsumed_inbuilt = dict(
             sorted(
@@ -218,7 +189,7 @@ class LogiTyme:
             memory_consumed=current / 10**6,
             functions=funcs,
             inbuilt_functions=time_comsumed_inbuilt,
-            saveFile=save
+            saveFile=saveFile
         )
 
 
@@ -229,24 +200,23 @@ class LogiTyme:
     def LogiFuncStart(self, name="default"):
         if name == "default":
             name = str(uuid.uuid4())
-            self.fileName = name
+            self.__fileName = name
         else:
-            if(os.path.exists("." + self.filePath + name + ".prof" if self.env == "local" else self.filePath + name + ".prof")):
+            if(os.path.exists(self.__filePath + name + ".prof" if self.__env == "local" else self.__filePath + name + ".prof")):
                 name = name + "_" + str(uuid.uuid4())
-                self.fileName = name
+                self.__fileName = name
             else:
-                self.fileName = name
-        self.customProfile = cProfile.Profile()
-        self.customProfile.enable()
-        self.filenames.append(name)
+                self.__fileName = name
+        self.__customProfile = cProfile.Profile()
+        self.__customProfile.enable()
+        self.__filenames.append(name)
 
     def LogiFuncEnd(self):
-        name = self.fileName
-        Stats(self.customProfile).strip_dirs().sort_stats("ncalls").dump_stats(
-            "." + self.filePath + name + ".prof" if self.env == "local" else self.filePath + name + ".prof"
+        name = self.__fileName
+        Stats(self.__customProfile).strip_dirs().sort_stats("ncalls").dump_stats(
+            self.__filePath + name + ".prof" if self.__env == "local" else self.__filePath + name + ".prof"
         )
-        self.customProfile.disable()
-        Stats(self.customProfile).strip_dirs().sort_stats("ncalls").print_stats()
-        self.customProfile = None
-        self.fileName = ""
-        self.profiler.enable()
+        self.__customProfile.disable()
+        self.__customProfile = None
+        self.__fileName = ""
+        self.__profiler.enable()
