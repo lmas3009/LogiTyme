@@ -22,7 +22,7 @@ class LogiTyme:
         self.__env = env
         self.__profiler = cProfile.Profile()
         self.__tracemalloc = tracemalloc
-        self.__current_file_name = sys.argv[0].split("/")[-1]
+        self.__current_file_name = os.path.split(sys.argv[0])[1]
         self.__filenames = []
         self.__customProfile = None
         self.__filePath = "tmp/"
