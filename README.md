@@ -2,7 +2,7 @@
 <p align="center">A Python handler for <a href="https://github.com/lmas3009/LogiTyme"><i>logityme</i></a>.</p>
 
 [//]: # ([![python compatibility]&#40;https://github.com/lmas3009/LogiTyme/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions/badge.svg&#41;]&#40;https://github.com/lmas3009/LogiTyme/actions/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions.yml&#41;)
-[![python version](https://img.shields.io/badge/Works_With_Python-3.9,%203.10,%203.11-orange)](https://github.com/lmas3009/LogiTyme/actions/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions.yml)
+[![python version](https://img.shields.io/badge/Works_With_Python-3.8,%203.9,%203.10,%203.11-orange)](https://github.com/lmas3009/LogiTyme/actions/workflows/Check%20Python%20Package%20Compatiblity%20in%20all%20versions.yml)
 
 ---
 
@@ -111,7 +111,7 @@ The above function "for-loop" is in the 2 position for having highest amount of 
 
 
 # _Release Version_
-- **```0.0.2 / 0.0.3 / 0.0.4 / 0.0.5```**
+- **```0.0.2 / 0.0.3 / 0.0.4 / 0.0.5 / 0.0.6```**
   - Launching LogiTyme
     - Functions Included:
       - **StartReport:** _used to start the process of logging the time for you python program._
