@@ -31,10 +31,11 @@ Simple example on how to use:
 ```bash
 from LogiTyme import LogiTyme
 
-logityme = LogiTyme(env="local")
+logityme = LogiTyme(env="local",maxTime=5)
 
 logityme.StartReport()
 
+@logityme.smart_threshold_check(maxTimeLimit=3)
 def slow_function(n):
   result = 0
   for i in range(n):
@@ -43,9 +44,23 @@ def slow_function(n):
       print(result)
 
   return result
-slow_function(500)
 
-logityme.LogiFuncStart(name="for-loop")
+
+
+@logityme.smart_threshold_check(maxTimeLimit=2)
+def slow_function2(n):
+  result = 0
+  for i in range(n):
+    for j in range(n):
+      result += i*j
+      print(result)
+
+  return result
+
+slow_function(20)
+slow_function2(20)
+
+logityme.LogiFuncStart(name="for-loop", maxLimit=3)
 re = 0
 for i in range(500):
   for j in range(500):
@@ -58,34 +73,36 @@ logityme.GenerateReport()
 
 **_Resulted Output:_**
 ```text
+
 Performance Analysis
 
 1. Introduction:
-	This report presents the findings of performance analysis conducted on the python program 'test_main.py'. This purpose of the analysis is to give insights of time consumed by the program and provide recommendations for optimizing the programs's performance
+	This report presents the findings of a performance analysis conducted on the Python program 'test.py'. The purpose of the analysis is to provide insights into the time consumed by the program and offer recommendations for optimizing its performance.
 
 2. Methodolgy:
-	The program was profiled using cprofile mmodile to collect data on exection time. The collected data was analyzed to identify functions consuming the most time.
+	The program was profiled using the cProfile module to collect data on execution time. The collected data was analyzed to identify the functions consuming the most time.
 
 3. Results:
-	- Started the program at: 2024-06-14 14:25:01.708068
-	- Ended the program at: 2024-06-14 14:25:07.886945
-	- Total Execution Time: 6.179 seconds
-	- memory consumed: 0.0203MB
+	- Started the program at: 2024-07-17 17:38:14.340244
+	- Ended the program at: 2024-07-17 17:38:19.493889
+	- Total Execution Time: 5.152 seconds
+	- As you defined the threshold limit as 5 mins, Since this script took Less then your threshold limit.
+	- memory consumed: 0.0234MB
 
 4. Functions Results:
-+---------------+---------------+
-| Function Name | Time Consumed |
-+---------------+---------------+
-| slow_function | 3.024 secs    |
-| for-loop      | 2.65 secs     |
-+---------------+---------------+
++----------------+---------------+-----------------------------+
+| Function Name  | Time Consumed | Maximum Threshold Limit Set |
++----------------+---------------+-----------------------------+
+| slow_function  | 0.004 secs    | 180 secs                    |
+| slow_function2 | 0.004 secs    | 120 secs                    |
+| for-loop       | 4.549 secs    | 180 secs                    |
++----------------+---------------+-----------------------------+
 
 5. inBuilt-functions Time-Consumed Report:
 +----------------------------------+---------------+
 | Function Name                    | Time Consumed |
 +----------------------------------+---------------+
-| <built-in method builtins.print> | 5.253 secs    |
-| <built-in method nt.stat>        | 0.001 secs    |
+| <built-in method builtins.print> | 4.556 secs    |
 +----------------------------------+---------------+
 
 6. Environment Suggestions:
@@ -96,21 +113,32 @@ Performance Analysis
 			 Good choice for short tasks
 
 7. Code Optimization:
-+---------------+---------------+
-| Function Name | Time Consumed |
-+---------------+---------------+
-| slow_function | 3.024 secs    |
-| for-loop      | 2.65 secs     |
-+---------------+---------------+
-The above function "slow_function" is in the 1 position for having highest amount of time in the entire program. Since the function took 3.024 secs is less then 300 seconds (i.e < 5 mins). The function is quite optimized 
-The above function "for-loop" is in the 2 position for having highest amount of time in the entire program. Since the function took 2.65 secs is less then 300 seconds (i.e < 5 mins). The function is quite optimized 
++----------------+---------------+-----------------------------+
+| Function Name  | Time Consumed | Maximum Threshold Limit Set |
++----------------+---------------+-----------------------------+
+| slow_function  | 0.004 secs    | 180 secs                    |
+| slow_function2 | 0.004 secs    | 120 secs                    |
+| for-loop       | 4.549 secs    | 180 secs                    |
++----------------+---------------+-----------------------------+
+Since this function "slow_function" took 0.004 secs is less then 180 seconds (i.e < 3 mins). The function is quite optimized 
+Since this function "slow_function2" took 0.004 secs is less then 120 seconds (i.e < 2 mins). The function is quite optimized 
+Since this function "for-loop" took 4.549 secs is less then 180 seconds (i.e < 3 mins). The function is quite optimized 
 
 8. Conclusion:
-	The analysis revealed areas for potential optimization in the Python program 'test_main.py'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency
+	The analysis revealed areas for potential optimization in the Python program 'test.py'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency
 ```
 
 
 # _Release Version_
+- **```0.0.7```**
+  -Introducing maxTime on LogiTyme
+    - **LogiTyme(env="local",maxTime=5)** _used to set the time limt for entire python program. This is for set the threshold limit._
+  - Introducing decorators
+    - **@logityme.smart_threshold_check(maxTimeLimit=2)** _used to set the time limt for a function. If the limit crossed, It will suggest you for a optimization._
+  - Introducing maxLimit on LogiFuncStart
+    - **logityme.LogiFuncStart(name="for-loop", maxLimit=3)** _used to keep track of the threshold limit, if it cross the limit, It will suggest you for a optimization._
+  
+
 - **```0.0.2 / 0.0.3 / 0.0.4 / 0.0.5 / 0.0.6```**
   - Launching LogiTyme
     - Functions Included:
