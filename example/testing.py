@@ -12,7 +12,6 @@ def slow_function(n):
 
   return result
 
-
 @logityme.smart_threshold_check(maxTimeLimit=2)
 def slow_function2(n):
   result = 0

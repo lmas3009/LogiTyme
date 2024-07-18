@@ -45,8 +45,6 @@ def slow_function(n):
 
   return result
 
-
-
 @logityme.smart_threshold_check(maxTimeLimit=2)
 def slow_function2(n):
   result = 0
@@ -86,7 +84,7 @@ Performance Analysis
 	- Started the program at: 2024-07-17 17:38:14.340244
 	- Ended the program at: 2024-07-17 17:38:19.493889
 	- Total Execution Time: 5.152 seconds
-	- As you defined the threshold limit as 5 mins, Since this script took Less then your threshold limit.
+	- As you defined the threshold limit as 5 mins, Since this script took Less then your threshold limit, you are good to go...
 	- memory consumed: 0.0234MB
 
 4. Functions Results:
@@ -120,18 +118,18 @@ Performance Analysis
 | slow_function2 | 0.004 secs    | 120 secs                    |
 | for-loop       | 4.549 secs    | 180 secs                    |
 +----------------+---------------+-----------------------------+
-Since this function "slow_function" took 0.004 secs is less then 180 seconds (i.e < 3 mins). The function is quite optimized 
-Since this function "slow_function2" took 0.004 secs is less then 120 seconds (i.e < 2 mins). The function is quite optimized 
-Since this function "for-loop" took 4.549 secs is less then 180 seconds (i.e < 3 mins). The function is quite optimized 
+Since this function "slow_function" took 0.004 secs is less then 180 seconds (i.e < 3 mins). The function is quite optimized.
+Since this function "slow_function2" took 0.004 secs is less then 120 seconds (i.e < 2 mins). The function is quite optimized. 
+Since this function "for-loop" took 4.549 secs is less then 180 seconds (i.e < 3 mins). The function is quite optimized.
 
 8. Conclusion:
-	The analysis revealed areas for potential optimization in the Python program 'test.py'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency
+	The analysis revealed areas for potential optimization in the Python program 'test.py'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency.
 ```
 
 
 # _Release Version_
-- **```0.0.7```**
-  -Introducing maxTime on LogiTyme
+- **```0.0.7 / 0.0.8```**
+  - Introducing maxTime on LogiTyme
     - **LogiTyme(env="local",maxTime=5)** _used to set the time limt for entire python program. This is for set the threshold limit._
   - Introducing decorators
     - **@logityme.smart_threshold_check(maxTimeLimit=2)** _used to set the time limt for a function. If the limit crossed, It will suggest you for a optimization._

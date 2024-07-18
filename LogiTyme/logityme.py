@@ -43,7 +43,7 @@ class LogiTyme:
             if not os.path.exists(self.__filePath):
                 os.makedirs(self.__filePath)
 
-    # Decorator to get the function name
+    # Decorator to get the function name and maxTimeLimit
     def smart_threshold_check(self, maxTimeLimit):
         def threshold_check(func):
             def check(*args):
@@ -102,7 +102,7 @@ class LogiTyme:
         report += f"""\tThe program was profiled using the cProfile module to collect data on execution time. The collected data was analyzed to identify the functions consuming the most time.\n\n"""
 
         report += f"3. Results:\n"
-        report += f"""\t- Started the program at: {self.__startTime}\n\t- Ended the program at: {self.__endTime}\n\t- Total Execution Time: {total_time} seconds\n\t- As you defined the threshold limit as {self.__maxTime} mins, Since this script took {total_time < self.__maxTime * 60 and "Less then your threshold limit." or "More then your threshold limit."}\n\t- memory consumed: {round(memory_consumed, 4)}MB\n\n"""
+        report += f"""\t- Started the program at: {self.__startTime}\n\t- Ended the program at: {self.__endTime}\n\t- Total Execution Time: {total_time} seconds\n\t- As you defined the threshold limit as {self.__maxTime} mins, Since this script took {total_time < self.__maxTime * 60 and "Less then your threshold limit, you are good to go..." or "More then your threshold limit, try to optimize the script to fit under your threshold limit."}\n\t- memory consumed: {round(memory_consumed, 4)}MB\n\n"""
         report += f"4. Functions Results:\n"
 
         functions_table = [["Function Name", "Time Consumed", "Maximum Threshold Limit Set"]]
@@ -137,12 +137,12 @@ class LogiTyme:
                      str(function_items[1][function + "_maxLimit"] * 60) + " secs"]
                 )
                 c += 1
-                report_function_max_time += f"""Since this function "{function}" took {round(function_items[1][function], 4)} secs is {round(function_items[1][function], 4) < function_items[1][function + "_maxLimit"] * 60 and "less then " + str(function_items[1][function + "_maxLimit"] * 60) + " seconds (i.e < " + str(function_items[1][function + "_maxLimit"]) + " mins). The function is quite optimized" or "is more then " + str(function_items[1][function + "_maxLimit"] * 60) + " seconds (i.e > " + str(function_items[1][function + "_maxLimit"]) + " mins). Try to optimze the function a bit more to decrease the time consumed by code running on serverless or docker container"} \n"""
+                report_function_max_time += f"""Since this function "{function}" took {round(function_items[1][function], 4)} secs is {round(function_items[1][function], 4) < function_items[1][function + "_maxLimit"] * 60 and "less then " + str(function_items[1][function + "_maxLimit"] * 60) + " seconds (i.e < " + str(function_items[1][function + "_maxLimit"]) + " mins). The function is quite optimized." or "is more then " + str(function_items[1][function + "_maxLimit"] * 60) + " seconds (i.e > " + str(function_items[1][function + "_maxLimit"]) + " mins). Try to optimze the function a bit more to decrease the time consumed by code running on serverless or docker container."} \n"""
         function_table = AsciiTable(functions_table)
         report += function_table.table + "\n"
         report += report_function_max_time + "\n"
         report += "8. Conclusion:\n"
-        report += f"\tThe analysis revealed areas for potential optimization in the Python program '{self.__current_file_name}'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency"
+        report += f"\tThe analysis revealed areas for potential optimization in the Python program '{self.__current_file_name}'. By implementing the recommendations outlined in this report, the program's performance can be improved, leading to better overall efficency."
 
         if saveFile:
             with open(
