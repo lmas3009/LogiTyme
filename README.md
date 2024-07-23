@@ -27,11 +27,49 @@ After installation, you can verify it by importing LogiTyme in a python script
 
 # *Usage*
 
-Simple example on how to use:
+Simple example on how to use LogiTyme in Cloud Provider:
+
+Checkout the expected output: https://github.com/lmas3009/LogiTyme/blob/main/example/testing-cloud.md
+
+```bash
+from LogiTyme import LogiTymeCloud
+logityme = LogiTymeCloud(maxTime=5)
+logityme.StartReport()
+
+@logityme.smart_threshold_check(maxTimeLimit=3)
+def slow_function(n):
+  result = 0
+  for i in range(n):
+    for j in range(n):
+      result += i*j
+      print(result)
+
+  return result
+
+for i in range(10):
+  for j in range(10):
+    print(i*j)
+
+def slow_function2(n):
+  result = 0
+  for i in range(n):
+    for j in range(n):
+      result += i*j
+      print(result)
+
+  return result
+
+slow_function(20)
+slow_function2(20)
+
+logityme.GenerateReport()
+```
+
+Simple example on how to use LogiTyme in local:
 ```bash
 from LogiTyme import LogiTyme
 
-logityme = LogiTyme(env="local",maxTime=5)
+logityme = LogiTyme(maxTime=5)
 
 logityme.StartReport()
 
@@ -69,7 +107,7 @@ logityme.LogiFuncEnd()
 logityme.GenerateReport()
 ```
 
-**_Resulted Output:_**
+**_Resulted Output while running in local:_**
 ```text
 
 Performance Analysis
@@ -128,6 +166,17 @@ Since this function "for-loop" took 4.549 secs is less then 180 seconds (i.e < 3
 
 
 # _Release Version_
+
+- **```0.0.9```**
+  - Introducing **LogiTymeCloud**
+    - This is to track time spent by a program while running in any cloud provider. For example check out: https://github.com/lmas3009/LogiTyme/blob/main/example/testing-cloud.py
+    - In LogiTymeCloud you can't calculate time spent by, any loops, api-calls, etc..
+  - Decommission
+    - We removed **_env_** from **LogiTyme(env="local",maxTime=5)**, now it will be **LogiTyme(maxTime=5)** or **LogiTymeCloud(maxTime=10)**
+  - Resolved Minor Bugs while Generating Report.
+    
+
+
 - **```0.0.7 / 0.0.8```**
   - Introducing maxTime on LogiTyme
     - **LogiTyme(env="local",maxTime=5)** _used to set the time limt for entire python program. This is for set the threshold limit._

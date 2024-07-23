@@ -1,5 +1,5 @@
 from LogiTyme import LogiTyme
-logityme = LogiTyme(env="local",maxTime=5)
+logityme = LogiTyme(maxTime=5)
 logityme.StartReport()
 
 @logityme.smart_threshold_check(maxTimeLimit=3)
@@ -12,7 +12,6 @@ def slow_function(n):
 
   return result
 
-@logityme.smart_threshold_check(maxTimeLimit=2)
 def slow_function2(n):
   result = 0
   for i in range(n):
